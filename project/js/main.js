@@ -25,6 +25,7 @@ class ProductList {
     this.allProducts = [];
     this._fetchProducts();
     this.render();
+    this.sumProduct();
     console.log(this.goods);
     console.log(this.allProducts);
   }
@@ -46,6 +47,14 @@ class ProductList {
       this.allProducts.push(productObject);
       block.insertAdjacentHTML('beforeend', productObject.render());
     }
+  }
+
+  sumProduct() {
+    let sum = 0;
+    for (let product of this.goods) {    
+      sum += product.price;      
+    }
+    console.log(sum);
   }
 }
 
