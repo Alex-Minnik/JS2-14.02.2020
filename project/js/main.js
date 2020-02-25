@@ -25,6 +25,7 @@ class ProductList {
     this.allProducts = [];
     this._fetchProducts();
     this.render();
+    this.sumProduct();
     console.log(this.goods);
     console.log(this.allProducts);
   }
@@ -46,29 +47,24 @@ class ProductList {
       this.allProducts.push(productObject);
       block.insertAdjacentHTML('beforeend', productObject.render());
     }
+    block.insertAdjacentHTML('beforeend', `<p>Сумма всех товаров: ${this.sumProduct()}`);
+  }
+
+  sumProduct() {
+    return this.allProducts.reduce((accum, item) => accum +=item.price, 0);
   }
 }
 
-new ProductList();
+class Cart {
+  //рендер корзины
+  //подсчет общей стоимости товаров
+}
 
-// const products = [
-//   {id: 1, title: 'Notebook', price: 1000},
-//   {id: 2, title: 'Mouse', price: 100},
-//   {id: 3, title: 'Keyboard', price: 250},
-//   {id: 4, title: 'Gamepad', price: 150},
-// ];
-//
-// const renderProduct = (item, img='https://placehold.it/200x150') => `<div class="product-item">
-//                 <img src="${img}" alt="Some img">
-//                 <div class="desc">
-//                     <h3>${item.title}</h3>
-//                     <p>${item.price} \u20bd</p>
-//                     <button class="buy-btn">Купить</button>
-//                 </div>
-//             </div>`;
-//
-// const renderProducts = list => {
-//   document.querySelector('.products').insertAdjacentHTML('beforeend', list.map(item => renderProduct(item)).join(''));
-// };
-//
-// renderProducts(products);
+class CartItems {
+  //добавление товара
+  //удаление товара
+  //изменение количества товара
+  //рендер товара
+}
+
+new ProductList();
