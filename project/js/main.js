@@ -1,3 +1,22 @@
+const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
+
+// Переделать в ДЗ
+let getRequest = (url, cb) => {
+  let xhr = new XMLHttpRequest();
+  xhr.open('GET', url, true);
+  xhr.onreadystatechange = () => {
+    if (xhr.readyState === 4) {
+      if (xhr.status !== 200) {
+        console.log('Error');
+      } else {
+        cb(xhr.responseText);
+      }
+    }
+  };
+  xhr.send();
+};
+
+
 class ProductItem {
   constructor(product, img='https://placehold.it/200x150') {
     this.title = product.title;
@@ -23,20 +42,30 @@ class ProductList {
     this.container = container;
     this.goods = [];
     this.allProducts = [];
-    this._fetchProducts();
-    this.render();
-    this.sumProduct();
-    console.log(this.goods);
-    console.log(this.allProducts);
+    //this._fetchProducts();
+    this._getProducts()
+        .then(data => {
+          this.goods = [...data];
+          this.render();
+        });
+    //this.render();
+    this.calcSum();    
   }
+  
+  // _fetchProducts() {
+  //   getRequest(`${API}/catalogData.json`, (data) => {
+  //     this.goods = JSON.parse(data);
+  //     this.render();
+  //     console.log(this.goods);
+  //   });
+  // }
 
-  _fetchProducts() {
-    this.goods = [
-      {id: 1, title: 'Notebook', price: 1000},
-      {id: 2, title: 'Mouse', price: 100},
-      {id: 3, title: 'Keyboard', price: 250},
-      {id: 4, title: 'Gamepad', price: 150},
-    ];
+  _getProducts() {
+    return fetch(`${API}/catalogData.json`)
+        .then(result => result.json())
+        .catch(error => {
+          console.log('Error:', error);
+        });
   }
 
   render() {
@@ -47,10 +76,10 @@ class ProductList {
       this.allProducts.push(productObject);
       block.insertAdjacentHTML('beforeend', productObject.render());
     }
-    block.insertAdjacentHTML('beforeend', `<p>Сумма всех товаров: ${this.sumProduct()}`);
+    block.insertAdjacentHTML('beforeend', `<p>Сумма всех товаров: ${this.calcSum()}`);
   }
 
-  sumProduct() {
+  calcSum() {
     return this.allProducts.reduce((accum, item) => accum +=item.price, 0);
   }
 }
@@ -67,4 +96,4 @@ class CartItems {
   //рендер товара
 }
 
-new ProductList();
+const list = new ProductList();
