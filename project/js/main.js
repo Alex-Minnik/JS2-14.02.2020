@@ -19,9 +19,9 @@ let getRequest = (url, cb) => {
 
 class ProductItem {
   constructor(product, img='https://placehold.it/200x150') {
-    this.title = product.title;
+    this.title = product.product_name;
     this.price = product.price;
-    this.id = product.id;
+    this.id = product.id_product;
     this.img = img;
   }
 
