@@ -55,41 +55,13 @@ class ProductItem {
   }
 }
 
-class ProductList {
-  constructor(container = '.products') {
+class List {
+  constructor(container) {
     this.container = container;
     this.goods = [];
     this.allProducts = [];
-    this._fetchProducts();
-    // this._getProducts()
-    //     .then(data => {
-    //       this.goods = [...data];
-    //       this.render();
-    //     });
-    //this.render();
-    this.calcSum();    
   }
   
-  _fetchProducts() {
-    getRequest(`${API}/catalogData.json`)
-      .then((data) => {
-        this.goods = JSON.parse(data);
-        this.render();
-        console.log(this.goods);
-      })      
-      .catch((error) => {
-        console.log(error);
-      })
-  }
-
-  // _getProducts() {
-  //   return fetch(`${API}/catalogData.json`)
-  //       .then(result => result.json())
-  //       .catch(error => {
-  //         console.log('Error:', error);
-  //       });
-  // }
-
   render() {
     const block = document.querySelector(this.container);
 
@@ -104,18 +76,104 @@ class ProductList {
   calcSum() {
     return this.allProducts.reduce((accum, item) => accum +=item.price, 0);
   }
+
+  _fetchProducts() {
+    getRequest(`${API}/catalogData.json`)
+      .then((data) => {
+        this.goods = JSON.parse(data);
+        this.render();
+      })      
+      .catch((error) => {
+        console.log(error);
+      })
+  }
 }
 
-class Cart {
+class ProductList extends List {
+  constructor(container = '.products') {   
+    super(container);
+    this._fetchProducts();
+    // this._getProducts()
+    //     .then(data => {
+    //       this.goods = [...data];
+    //       this.render();
+    //     });
+    //this.render();
+    //this.calcSum(); 
+    console.log(this.allProducts); 
+    //this.render();  
+  }
+  
+  
+  // _fetchProducts() {
+  //   getRequest(`${API}/catalogData.json`)
+  //     .then((data) => {
+  //       this.goods = JSON.parse(data);
+  //       this.render();
+  //       console.log(this.goods);
+  //     })      
+  //     .catch((error) => {
+  //       console.log(error);
+  //     })
+  // }
+
+  // _getProducts() {
+  //   return fetch(`${API}/catalogData.json`)
+  //       .then(result => result.json())
+  //       .catch(error => {
+  //         console.log('Error:', error);
+  //       });
+  // }
+
+  // render() {
+  //   const block = document.querySelector(this.container);
+
+  //   for (let product of this.goods) {
+  //     const productObject = new ProductItem(product);
+  //     this.allProducts.push(productObject);
+  //     block.insertAdjacentHTML('beforeend', productObject.render());
+  //   }
+  //   block.insertAdjacentHTML('beforeend', `<p>Сумма всех товаров: ${this.calcSum()}`);
+  // }
+
+  // calcSum() {
+  //   return this.allProducts.reduce((accum, item) => accum +=item.price, 0);
+  // }
+}
+
+class Cart extends List {
+  constructor(container = '.btn-cart', img='https://placehold.it/100x80') {
+    super(container, img);
+    //this._fetchProducts();
+    //console.log(goods);
+    //this.render();
+    this.addItemsInCart();
+    console.log(this.allProducts);
+  }
   //рендер корзины
   //подсчет общей стоимости товаров
+  //добавление товара
+  addItemsInCart() {
+    let products = document.querySelector('.products');
+    products.addEventListener('click', (event) => {
+      if (event.target.className === "buy-btn") {
+        console.log(event.target.parentNode.parentNode.dataset.id);
+
+      }
+    })
+  }
 }
 
 class CartItems {
-  //добавление товара
+  // constructor() {
+  //   this.addItemsInCart();
+  // }
+  
+
   //удаление товара
   //изменение количества товара
-  //рендер товара
+  //рендер товара  
 }
 
 const list = new ProductList();
+const cart = new Cart();
