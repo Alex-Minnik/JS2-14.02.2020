@@ -98,10 +98,7 @@ class ProductList extends List {
     //       this.goods = [...data];
     //       this.render();
     //     });
-    //this.render();
-    //this.calcSum(); 
-    console.log(this.allProducts); 
-    //this.render();  
+    console.log(this.allProducts);     
   }
   
   
@@ -123,36 +120,16 @@ class ProductList extends List {
   //       .catch(error => {
   //         console.log('Error:', error);
   //       });
-  // }
-
-  // render() {
-  //   const block = document.querySelector(this.container);
-
-  //   for (let product of this.goods) {
-  //     const productObject = new ProductItem(product);
-  //     this.allProducts.push(productObject);
-  //     block.insertAdjacentHTML('beforeend', productObject.render());
-  //   }
-  //   block.insertAdjacentHTML('beforeend', `<p>Сумма всех товаров: ${this.calcSum()}`);
-  // }
-
-  // calcSum() {
-  //   return this.allProducts.reduce((accum, item) => accum +=item.price, 0);
-  // }
+  // } 
 }
 
 class Cart extends List {
   constructor(container = '.btn-cart', img='https://placehold.it/100x80') {
-    super(container, img);
-    //this._fetchProducts();
-    //console.log(goods);
-    //this.render();
+    super(container, img);    
     this.addItemsInCart();
     console.log(this.allProducts);
   }
-  //рендер корзины
-  //подсчет общей стоимости товаров
-  //добавление товара
+  
   addItemsInCart() {
     let products = document.querySelector('.products');
     products.addEventListener('click', (event) => {
@@ -164,15 +141,7 @@ class Cart extends List {
   }
 }
 
-class CartItems {
-  // constructor() {
-  //   this.addItemsInCart();
-  // }
-  
-
-  //удаление товара
-  //изменение количества товара
-  //рендер товара  
+class CartItems {  
 }
 
 const list = new ProductList();
