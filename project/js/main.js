@@ -16,6 +16,13 @@ let getRequest = (url, cb) => {
   xhr.send();
 };
 
+// let getRequest = (url) => {
+
+//   return new Promise((resolve, reject) => {
+
+//   })
+// }
+
 
 class ProductItem {
   constructor(product, img='https://placehold.it/200x150') {
@@ -42,31 +49,31 @@ class ProductList {
     this.container = container;
     this.goods = [];
     this.allProducts = [];
-    //this._fetchProducts();
-    this._getProducts()
-        .then(data => {
-          this.goods = [...data];
-          this.render();
-        });
+    this._fetchProducts();
+    // this._getProducts()
+    //     .then(data => {
+    //       this.goods = [...data];
+    //       this.render();
+    //     });
     //this.render();
     this.calcSum();    
   }
   
-  // _fetchProducts() {
-  //   getRequest(`${API}/catalogData.json`, (data) => {
-  //     this.goods = JSON.parse(data);
-  //     this.render();
-  //     console.log(this.goods);
-  //   });
-  // }
-
-  _getProducts() {
-    return fetch(`${API}/catalogData.json`)
-        .then(result => result.json())
-        .catch(error => {
-          console.log('Error:', error);
-        });
+  _fetchProducts() {
+    getRequest(`${API}/catalogData.json`, (data) => {
+      this.goods = JSON.parse(data);
+      this.render();
+      console.log(this.goods);
+    });
   }
+
+  // _getProducts() {
+  //   return fetch(`${API}/catalogData.json`)
+  //       .then(result => result.json())
+  //       .catch(error => {
+  //         console.log('Error:', error);
+  //       });
+  // }
 
   render() {
     const block = document.querySelector(this.container);
