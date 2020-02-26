@@ -105,12 +105,13 @@ class ProductList extends List {
 }
 
 class Cart extends List {
-  constructor(container = '.btn-cart', img='https://placehold.it/100x80') {
+  constructor(container = '.cart-block', img='https://placehold.it/100x80') {
     super(container, img);    
     this.addItemsInCart();
     console.log(this.allProducts);
+    this._init();
   }
-  
+
   addItemsInCart() {
     let products = document.querySelector('.products');
     products.addEventListener('click', (event) => {
@@ -119,6 +120,12 @@ class Cart extends List {
 
       }
     })
+  }
+
+  _init() {
+    document.querySelector('.btn-cart').addEventListener('click', (event) => {
+      document.querySelector(this.container).classList.toggle('invisible');
+    });
   }
 }
 
