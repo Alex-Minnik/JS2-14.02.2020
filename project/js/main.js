@@ -32,7 +32,7 @@ class ProductItem {
                 <div class="desc">
                     <h3>${this.title}</h3>
                     <p>${this.price} \u20bd</p>
-                    <button class="buy-btn">Купить</button>
+                    <button class="buy-btn" data-id="${this.id}" data-price="${this.price}"  data-name="${this.title}">Купить</button>
                 </div>
             </div>`
   }
@@ -116,9 +116,15 @@ class Cart extends List {
     let products = document.querySelector('.products');
     products.addEventListener('click', (event) => {
       if (event.target.className === "buy-btn") {
-        console.log(event.target.parentNode.parentNode.dataset.id);
-
-      }
+        let product = {
+          id_product: +event.target.dataset['id'],
+          price: +event.target.dataset['price'],
+          product_name: event.target.dataset['name'],
+          quantity: 1
+        }
+        this.goods = [product];
+        this.render();
+      }      
     })
   }
 
