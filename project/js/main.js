@@ -1,23 +1,5 @@
 const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
 
-// Переделать в ДЗ
-let getRequest = (url) => {  
-  return new Promise ( (resolve, reject) => {
-    let xhr = new XMLHttpRequest();
-    xhr.open('GET', url, true);
-    xhr.onreadystatechange = () => {
-      if (xhr.readyState === 4) {
-        if (xhr.status !== 200) {
-          reject('Error');
-        } else {
-          resolve(xhr.responseText);
-        }
-      }
-    };
-  xhr.send();
-  });
-};
-
 class ProductItem {
   constructor(product, img='https://placehold.it/200x150') {
     this.title = product.product_name;
@@ -47,7 +29,6 @@ class List {
   
   render() {
     const block = document.querySelector(this.container);
-
     for (let product of this.goods) {
       const productObject = new ProductItem(product);
       this.allProducts.push(productObject);
@@ -59,49 +40,25 @@ class List {
   calcSum() {
     return this.allProducts.reduce((accum, item) => accum +=item.price, 0);
   }
-
-  _fetchProducts() {
-    getRequest(`${API}/catalogData.json`)
-      .then((data) => {
-        this.goods = JSON.parse(data);
-        this.render();
-      })      
-      .catch((error) => {
-        console.log(error);
-      })
-  }
 }
 
 class ProductList extends List {
   constructor(container = '.products') {   
     super(container);
-    this._fetchProducts();
-    // this._getProducts()
-    //     .then(data => {
-    //       this.goods = [...data];
-    //       this.render();
-    //     });
-  }  
-  
-  // _fetchProducts() {
-  //   getRequest(`${API}/catalogData.json`)
-  //     .then((data) => {
-  //       this.goods = JSON.parse(data);
-  //       this.render();
-  //       console.log(this.goods);
-  //     })      
-  //     .catch((error) => {
-  //       console.log(error);
-  //     })
-  // }
+    this._getProducts()
+        .then(data => {
+          this.goods = [...data];
+          this.render();
+        });
+  } 
 
-  // _getProducts() {
-  //   return fetch(`${API}/catalogData.json`)
-  //       .then(result => result.json())
-  //       .catch(error => {
-  //         console.log('Error:', error);
-  //       });
-  // } 
+  _getProducts() {
+    return fetch(`${API}/catalogData.json`)
+        .then(result => result.json())
+        .catch(error => {
+          console.log('Error:', error);
+        });
+  } 
 }
 
 class Cart extends List {
