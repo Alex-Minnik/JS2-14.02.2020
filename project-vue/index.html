@@ -22,7 +22,8 @@
         </div>
     </header>
     <main>
-        <div class="products">
+        <div v-show="!showProducts">Нет данных</div>
+        <div  v-show="showProducts" class="products">
             <div class="product-item" v-for="product of products" :key="product.id_product" :data-name="product.product_name">
                 <img :src="imgCatalog" alt="Some img">
                 <div class="desc">
