@@ -7,6 +7,7 @@ const app = new Vue({
     products: [],
     imgCatalog: 'https://placehold.it/200x150',
     textUser: '',
+    showCart: false,
   },
   methods: {
     getJson(url){
