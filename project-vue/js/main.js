@@ -54,14 +54,20 @@ const app = new Vue({
           this.filtered.push(product);
         };
       }
-
-      if (this.filtered.length === 0) {  //Не получается убрать в computed, если не меняеться data, то не запускаеться computed
-        this.showTextNoData = true;
-      } else {
-        this.showTextNoData = false;
-      }
+      this.showTextNoData = !this.filtered.length;
+      // if (this.filtered.length === 0) {  //Не получается убрать в computed
+      //   this.showTextNoData = true;
+      // } else {
+      //   this.showTextNoData = false;
+      // }
     }
   },
+
+  // computed: {
+  //   showTextNoData() {
+  //     return !!this.filtered.length
+  //   }
+  // },
   // хук жизненного цикла
   mounted(){
     this.getJson(`${API + this.catalogUrl}`)
