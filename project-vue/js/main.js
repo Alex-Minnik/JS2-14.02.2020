@@ -11,6 +11,7 @@ const app = new Vue({
     textUser: '',
     showCart: false,
     showTextNoData: false,
+    filtered: [],
   },
   methods: {
     getJson(url){
@@ -42,7 +43,7 @@ const app = new Vue({
     },
 
     filter() { 
-      let filtred = []; 
+      this.filtered = []; 
       const regexp = new RegExp(this.textUser, 'i');
       let allProducts = document.querySelectorAll('.product-item');
       for (let product of allProducts) {
@@ -50,10 +51,11 @@ const app = new Vue({
           product.classList.add('invisible');
         } else {
           product.classList.remove('invisible');
-          filtred.push(product);
+          this.filtered.push(product);
         };
       }
-      if (filtred.length === 0) {  //Помойму это кастыль, делать через length, если я делал filtred === [], мне всегда возвращало false
+
+      if (this.filtered.length === 0) {  //Не получается убрать в computed, если не меняеться data, то не запускаеться computed
         this.showTextNoData = true;
       } else {
         this.showTextNoData = false;
