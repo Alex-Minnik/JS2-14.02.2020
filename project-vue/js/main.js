@@ -10,9 +10,9 @@ const app = new Vue({
     imgCart: 'https://placehold.it/50x100',
     textUser: '',
     showCart: false,
-    showTextNoData: false,
-    filtered: [],
+    filtered: [1], // 1 чтоб при первой итерации в showTextNoData прилетел false
   },
+
   methods: {
     getJson(url){
       return fetch(url)
@@ -43,7 +43,7 @@ const app = new Vue({
     },
 
     filter() { 
-      this.filtered = []; 
+      this.filtered = []; // честим перед новым поиском(удаляем старые результаты)
       const regexp = new RegExp(this.textUser, 'i');
       let allProducts = document.querySelectorAll('.product-item');
       for (let product of allProducts) {
@@ -54,20 +54,15 @@ const app = new Vue({
           this.filtered.push(product);
         };
       }
-      this.showTextNoData = !this.filtered.length;
-      // if (this.filtered.length === 0) {  //Не получается убрать в computed
-      //   this.showTextNoData = true;
-      // } else {
-      //   this.showTextNoData = false;
-      // }
     }
   },
 
-  // computed: {
-  //   showTextNoData() {
-  //     return !!this.filtered.length
-  //   }
-  // },
+  computed: {
+    showTextNoData() {
+      return !this.filtered.length
+    }
+  },
+
   // хук жизненного цикла
   mounted(){
     this.getJson(`${API + this.catalogUrl}`)
