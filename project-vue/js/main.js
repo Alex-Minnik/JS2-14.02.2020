@@ -10,7 +10,7 @@ const app = new Vue({
     imgCart: 'https://placehold.it/50x100',
     textUser: '',
     showCart: false,
-    filtered: [1], // 1 чтоб при первой итерации в showTextNoData прилетел false
+    filtered: [], 
   },
 
   methods: {
@@ -69,6 +69,7 @@ const app = new Vue({
       .then(data => {
         for(let el of data){
           this.products.push(el);
+          this.filtered.push(el);
         }
       });
   }
