@@ -19,6 +19,7 @@
             </form>
             <button class="btn-cart" type="button" @click="showCart=!showCart">Корзина</button>
             <div class="cart-block" v-show="showCart">
+                <p v-if="!cartItems.length">Корзина пуста</p>
                 <div class="cart-item" v-for="item of cartItems" :key="item.id_product">
                     <div class="product-bio">
                         <img :src="imgCart" alt="Some image">
@@ -37,7 +38,7 @@
         </div>
     </header>
     <main>
-        <div v-show="showTextNoData">Нет данных</div>
+        <div v-show="showTextNoDataProducts">Нет данных</div>
         <div class="products">
             <div class="product-item" v-for="product of products" :key="product.id_product" :data-name="product.product_name">
                 <img :src="imgCatalog" alt="Some img">
