@@ -38,8 +38,6 @@ const app = new Vue({
             alert('Error');
           }
         })
-
-      
     },
 
     remove(item) {
@@ -53,8 +51,6 @@ const app = new Vue({
             }
           }
         })
-      
-      
     },
 
     filter() { 
