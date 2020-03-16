@@ -69,7 +69,7 @@ const app = new Vue({
   },
 
   computed: {
-    showTextNoData() {
+    showTextNoDataProducts() {
       return !this.filtered.length
     }
   },
