@@ -4,6 +4,7 @@ const app = new Vue({
   el: '#app',
   data: {
     catalogUrl: '/catalogData.json',
+    cartUrl: '/getBasket.json',
     products: [],
     cartItems: [],
     imgCatalog: 'https://placehold.it/200x150',
@@ -30,16 +31,21 @@ const app = new Vue({
         let prod = Object.assign({quantity: 1}, product);
         this.cartItems.push(prod);
       }
-      console.log(find);
-      console.log(product.id_product);
     },
 
     remove(item) {
-      if(item.quantity > 1) {
-        item.quantity--;
-      } else {
-        this.cartItems.splice(this.cartItems.indexOf(item), 1);
-      }
+      this.getJson(`${API}/deleteFromBasket.json`)
+        .then(data => {
+          if (data.result === 1) {
+            if(item.quantity > 1) {
+              item.quantity--;
+            } else {
+              this.cartItems.splice(this.cartItems.indexOf(item), 1);
+            }
+          }
+        })
+      
+      
     },
 
     filter() { 
@@ -65,9 +71,16 @@ const app = new Vue({
 
   // хук жизненного цикла
   mounted(){
+    this.getJson(`${API + this.cartUrl}`)
+      .then(data => {
+        for (let el of data.contents) {
+          this.cartItems.push(el);
+        }
+      })
+
     this.getJson(`${API + this.catalogUrl}`)
       .then(data => {
-        for(let el of data){
+        for(let el of data) {
           this.products.push(el);
           this.filtered.push(el);
         }
