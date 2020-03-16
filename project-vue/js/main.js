@@ -24,13 +24,22 @@ const app = new Vue({
     },
 
     addProduct(product){
-      let find = this.cartItems.find(el => el.id_product === product.id_product);
-      if (find) {
-        find.quantity++;
-      } else {
-        let prod = Object.assign({quantity: 1}, product);
-        this.cartItems.push(prod);
-      }
+      this.getJson(`${API}/addToBasket.json`)
+        .then(data => {
+          if (data.result === 1) {
+            let find = this.cartItems.find(el => el.id_product === product.id_product);
+            if (find) {
+              find.quantity++;
+            } else {
+              let prod = Object.assign({quantity: 1}, product);
+              this.cartItems.push(prod);
+            }
+          } else {
+            alert('Error');
+          }
+        })
+
+      
     },
 
     remove(item) {
